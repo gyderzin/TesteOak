@@ -1,35 +1,32 @@
-# teste-estagio
+# Teste de Estágio
 
-This template should help get you started developing with Vue 3 in Vite.
+Este projeto foi desenvolvido como parte do teste para a vaga de estágio na empresa Oak Tecnologia.
 
-## Recommended IDE Setup
+## Problema Apresentado
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Cadastro
 
-## Customize configuration
+- Formulário com os seguintes campos:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+  - Nome do produto: campo de texto
+  - Descrição do produto: campo de texto
+  - Valor do produto: campo de valor
+  - Disponível para venda: campo com 2 opções: sim / não
 
-## Project Setup
+### Listagem
 
-```sh
-npm install
-```
+- Colunas da listagem: nome, valor
+- Ordenação por valor do menor para o maior
+- Ao cadastrar um novo produto, a listagem deve ser aberta automaticamente
+- Deve existir um botão para cadastrar um novo produto a partir da listagem
 
-### Compile and Hot-Reload for Development
+## Solução
 
-```sh
-npm run dev
-```
+Para resolver o problema apresentado no teste, optei por utilizar JavaScript como linguagem de programação, juntamente com o framework Vue.js para agilizar o desenvolvimento, e Vuetify para trazer um layout moderno e dinâmico.
 
-### Compile and Minify for Production
+Também foram implementadas duas funcionalidades adicionais:
+- A possibilidade do usuário editar e excluir os produtos cadastrados;
+- Persistência de dados, permitindo que os produtos continuem disponíveis mesmo após recarregar a página ou fechar o navegador.
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+Com isso apresentado, acredito ter solucionado a situação problema apresentada, utilizando as melhores práticas.
 ```
