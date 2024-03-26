@@ -1,0 +1,21 @@
+Olá, querido(a) recrutador(a). 
+
+Envio este projeto para cumprir a situação problema apresentada para a vaga de estágio da Oak Tecnologia, e espero ter os requisitos para fazer parte de sua equipe. 
+
+Este projeto completo está no meu repositório do github, segue o link abaixo:
+https://github.com/gyderzin/TesteOak
+
+Para facilitar a correção do projeto, deixei o mesmo publicado no Vercel. Segue o link abaixo:
+https://teste-oak.vercel.app
+
+Caso queira executar na sua máquina, execute o index.html na pasta dist com o Live Server.
+
+
+Solução
+  Para resolver o problema apresentado no teste, optei por usar JavaScript como linguagem de programação, juntamente do framework Vue.JS para agilizar o   
+  desenvolvimento, e Vuetify para trazer um layout moderno e dinâmico.
+  Também implementei 2 funcionalidades adicionais: 
+  - A possibilidade do usuário editar e excluir os produtos cadastrados;
+  - Persistência de dados, permitindo que os produtos continuem disponíveis mesmo depois de recarregar a página ou fechar o navegador.
+
+  Com isto apresentado, acredito ter solucionado a situação problema apresentada, utilizando as melhores práticas.

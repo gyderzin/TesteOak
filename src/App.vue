@@ -3,8 +3,12 @@
 <template>
   <!-- Componente que faz a animação dos quadrados subindo na tela -->
   <Animated></Animated>
-
   <v-container class="context">
+    <PrimeiroAcesso v-if="primeiroAcesso == true"> </PrimeiroAcesso>
+    <transition name="custom-classes" enter-active-class="animate__animated animate__backInRight"
+      leave-active-class="animate__animated animate__backOutRight" mode="out-in">
+      <Alert :typeAlert="typeAlert" :messageAlert="messageAlert" :alertApp="alert"></Alert>
+    </transition>
     <v-row>
       <v-col cols="12" class="d-flex justify-center">
         <v-card color="white" width="100%">
@@ -23,7 +27,7 @@
               <!-- Tooltip do botão -->
               <v-tooltip text="Cadastrar produto" location="left">
                 <template v-slot:activator="{ props }">
-                   <!-- Botão adicionar produto -->
+                  <!-- Botão adicionar produto -->
                   <v-btn icon="mdi-plus" class="text-none" color="#222121" variant="flat"
                     @click="dialogAddProduto = true" v-bind="props"> </v-btn>
                 </template>
@@ -42,14 +46,14 @@
                 </template>
 
                 <template v-slot:item.id="{ value }">
-                    <!-- Ações de editar e deletar -->
+                  <!-- Ações de editar e deletar -->
                   <v-btn density="compact" variant="text" color="primary" class="ma-1" icon="mdi-pencil"
                     @click="openDialogEditar(value)"></v-btn>
                   <v-btn density="compact" variant="text" color="red" class="ma-1" icon="mdi-delete"
                     @click="openDialogDelete(value)"></v-btn>
                 </template>
 
-                <template v-slot:expanded-row="{ columns, item }">                  
+                <template v-slot:expanded-row="{ columns, item }">
                   <tr>
                     <td :colspan="columns.length" style=" background-color: whitesmoke">
                       Descrição do produto: {{ item.descriçao }}
@@ -107,7 +111,7 @@
               </v-card>
             </v-dialog>
 
-          <!-- Dialog para editar produto -->
+            <!-- Dialog para editar produto -->
 
             <v-dialog v-model="dialogEdit" width="auto">
               <v-card width="500">
@@ -210,25 +214,31 @@
 
 <script>
 import Animated from './components/Animated.vue'
+import PrimeiroAcesso from './components/PrimeiroAcesso.vue'
+import Alert from './components/Alert.vue'
 export default {
   components: {
-    Animated
+    Animated, PrimeiroAcesso, Alert
   },
   created() {
     // Recuperar os produtos de localStorage caso eles existam
     let produtos = localStorage.getItem('produtos')
-    if (produtos !== null) {
-      this.produtos = JSON.parse(produtos)
-    }
+    let primeiroAcesso = localStorage.getItem('primeiroAcesso')
+    if (produtos !== null) this.produtos = JSON.parse(produtos)
+    if (primeiroAcesso == null) this.primeiroAcesso = true
+    else this.primeiroAcesso = false
   },
   data() {
     return {
       // Variáveis de controle do sistema
-      darkMode: true,
+      primeiroAcesso: undefined,
       expanded: [],
       dialogAddProduto: false,
       dialogEdit: false,
       dialogDelete: false,
+      alert: false,
+      typeAlert: 'success',
+      messageAlert: 'Produto cadastrado com sucesso',
       cadastroProduto: {
         nome: '', descriçao: '', valor: '', disponivelVenda: 'Sim', id: ''
       },
@@ -260,11 +270,12 @@ export default {
         this.produtos.push(this.cadastroProduto)
         this.resetFormCadastroProduto()
         localStorage.setItem('produtos', JSON.stringify(this.produtos))
+        this.setAlert('success', 'Produto adicionado com sucesso!');
       }
     },
     // Função para editar um produto
     async editarProduto() {
-       // Verificar se os campos necessários estão preenchidos
+      // Verificar se os campos necessários estão preenchidos
       const { valid } = await this.$refs.form.validate()
       if (valid) {
         this.produtos.forEach((produto, i) => {
@@ -277,6 +288,7 @@ export default {
             // Cadastrar o produto e salvar em localStorage
             this.produtos[i] = this.editProduto
             localStorage.setItem('produtos', JSON.stringify(this.produtos))
+            this.setAlert('info', 'Produto editado com sucesso!');
           }
         })
         this.dialogEdit = false
@@ -288,6 +300,7 @@ export default {
         if (produto.id == this.deleteProduto.id) {
           this.produtos.splice(i, 1)
           localStorage.setItem('produtos', JSON.stringify(this.produtos))
+          this.setAlert('success', 'Produto deletadoz com sucesso!');
         }
       })
       this.dialogDelete = false
@@ -321,6 +334,11 @@ export default {
     resetFormDeleteProduto() {
       this.dialogDelete = false
     },
+    setAlert(type, message) {
+      this.typeAlert = type
+      this.messageAlert = message
+      this.alert = true
+    },
     // Formatar o valor do produto a cada clique para formato da moeda BRL
     formatarValorNew(event) {
       let valor = event.target.value.replace(/\D/g, '');
@@ -331,7 +349,7 @@ export default {
         });
       }
       this.cadastroProduto.valor = valor;
-    },  
+    },
     formatarValorEdit(event) {
       let valor = event.target.value.replace(/\D/g, '');
       if (valor !== '') {
@@ -363,7 +381,16 @@ export default {
         el = v;
         return el
       }
-    },
+    },   
   },
+  watch: {
+      alert(newVal) {
+        if(newVal == true) {
+          setTimeout(() => {
+            this.alert = false
+          }, 4000)
+        }
+      }
+    }
 }
 </script>
